@@ -883,6 +883,10 @@ async def update_captcha_config(
     ezcaptcha_base_url = request.get("ezcaptcha_base_url")
     capsolver_api_key = request.get("capsolver_api_key")
     capsolver_base_url = request.get("capsolver_base_url")
+    flow_captcha_service_base_url = request.get("flow_captcha_service_base_url")
+    flow_captcha_service_solve_path = request.get("flow_captcha_service_solve_path")
+    flow_captcha_service_api_key = request.get("flow_captcha_service_api_key")
+    flow_captcha_service_timeout_seconds = request.get("flow_captcha_service_timeout_seconds")
     browser_proxy_enabled = request.get("browser_proxy_enabled", False)
     browser_proxy_url = request.get("browser_proxy_url", "")
     browser_count = request.get("browser_count", 1)
@@ -903,6 +907,10 @@ async def update_captcha_config(
         ezcaptcha_base_url=ezcaptcha_base_url,
         capsolver_api_key=capsolver_api_key,
         capsolver_base_url=capsolver_base_url,
+        flow_captcha_service_base_url=flow_captcha_service_base_url,
+        flow_captcha_service_solve_path=flow_captcha_service_solve_path,
+        flow_captcha_service_api_key=flow_captcha_service_api_key,
+        flow_captcha_service_timeout_seconds=max(1, int(flow_captcha_service_timeout_seconds)) if flow_captcha_service_timeout_seconds else None,
         browser_proxy_enabled=browser_proxy_enabled,
         browser_proxy_url=browser_proxy_url if browser_proxy_enabled else None,
         browser_count=max(1, int(browser_count)) if browser_count else 1
@@ -937,6 +945,10 @@ async def get_captcha_config(token: str = Depends(verify_admin_token)):
         "ezcaptcha_base_url": captcha_config.ezcaptcha_base_url,
         "capsolver_api_key": captcha_config.capsolver_api_key,
         "capsolver_base_url": captcha_config.capsolver_base_url,
+        "flow_captcha_service_base_url": captcha_config.flow_captcha_service_base_url,
+        "flow_captcha_service_solve_path": captcha_config.flow_captcha_service_solve_path,
+        "flow_captcha_service_api_key": captcha_config.flow_captcha_service_api_key,
+        "flow_captcha_service_timeout_seconds": captcha_config.flow_captcha_service_timeout_seconds,
         "browser_proxy_enabled": captcha_config.browser_proxy_enabled,
         "browser_proxy_url": captcha_config.browser_proxy_url or "",
         "browser_count": captcha_config.browser_count

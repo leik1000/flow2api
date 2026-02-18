@@ -1202,6 +1202,15 @@ class FlowClient:
             except Exception as e:
                 debug_logger.log_error(f"[reCAPTCHA Browser] 错误: {str(e)}")
                 return None, None
+        # Flow 打码服务（通过统一上游入口）
+        elif captcha_method == "flowcaptcha":
+            try:
+                from .flow_captcha_service import FlowCaptchaService
+                service = FlowCaptchaService()
+                return await service.get_token(project_id=project_id, page_action=action), None
+            except Exception as e:
+                debug_logger.log_error(f"[reCAPTCHA flowcaptcha] 错误: {str(e)}")
+                return None, None
         # API打码服务
         elif captcha_method in ["yescaptcha", "capmonster", "ezcaptcha", "capsolver"]:
             token = await self._get_api_captcha_token(captcha_method, project_id, action)
